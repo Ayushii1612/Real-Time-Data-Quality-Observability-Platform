@@ -1,0 +1,49 @@
+{
+  "__inputs": [],
+  "__requires": [{ "type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0" }],
+  "annotations": { "list": [] },
+  "title": "Data Observability — Pipeline Health",
+  "uid": "data-obs-v1",
+  "version": 1,
+  "refresh": "30s",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Pipeline Health Heatmap",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 24, "x": 0, "y": 0 },
+      "datasource": { "type": "grafana-simple-json-datasource", "uid": "obs-api" },
+      "targets": [{ "refId": "A", "target": "/pipelines/overview" }],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "options": { "GREEN": { "color": "green", "index": 0 } }, "type": "value" },
+            { "options": { "YELLOW": { "color": "yellow", "index": 1 } }, "type": "value" },
+            { "options": { "RED": { "color": "red", "index": 2 } }, "type": "value" }
+          ]
+        }
+      }
+    },
+    {
+      "id": 2,
+      "title": "Active Incidents",
+      "type": "table",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 4 },
+      "datasource": { "type": "grafana-simple-json-datasource", "uid": "obs-api" },
+      "targets": [{ "refId": "A", "target": "/incidents/active" }]
+    },
+    {
+      "id": 3,
+      "title": "Recent Anomalies",
+      "type": "table",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 4 },
+      "datasource": { "type": "grafana-simple-json-datasource", "uid": "obs-api" },
+      "targets": [{ "refId": "A", "target": "/anomalies/recent" }]
+    }
+  ]
+}
